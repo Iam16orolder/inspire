@@ -1,0 +1,183 @@
+   <!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Philosophische Weisheiten</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #6a0dad, #4b0082);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      position: relative;
+    }
+
+    /* Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffffff, transparent);
+      border-radius: 50%;
+      animation: sparkle 2s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes sparkle {
+      0% { transform: translateY(0) scale(0.5); opacity: 0; }
+      50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) scale(0.5); opacity: 0; }
+    }
+
+    /* 3D button */
+    button {
+      background: linear-gradient(145deg, #ff4d4d, #cc0000);
+      border: none;
+      border-radius: 20px;
+      padding: 15px 30px;
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    button:hover {
+      background: linear-gradient(145deg, #cc0000, #ff4d4d);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+      transform: translateY(-3px);
+    }
+
+    #weisheit {
+      font-size: 24px;
+      text-align: center;
+      max-width: 80%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <audio autoplay loop>
+    <source src="ambience.mp3" type="audio/mpeg">
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
+
+  <button onclick="zeigeWeisheit()">More</button>
+  <div id="weisheit"></div>
+
+  <script>
+    const weisheiten = [
+      "There is no way to peace, peace is the way.",
+      "Everything is relative.",
+      "Walk to nature seeing yourself as part of it and you can always come home. Walk thinking you are not a part of it, it will not change that you are; what you do to nature returns to you.",
+      "If you cannot speak what is truth because they will kill you, they have no power. Strong warriors will not suppress truth; they do not fear it. Only liars fear truth.",
+      "If sickness made one weak, the one to insult him is even more weak. The sick that still smiles is strong.",
+      "Nothing matters, everything is nothing.",
+      "Everything flows.",
+      "Spend time with what is fun as much as you can, because everything else is dumb.",
+      "Feel free to do stupid things, but do not complain if they kill you.",
+      "Never fight if you can negotiate.",
+      "Never judge a warrior's honor on the violence he has given; judge his honor on the moments of his silence.",
+      "If you want to see, screaming for fire, prepare to get burned.",
+      "Punch only others if you can take a punch in your own face.",
+      "We are all flowers in the Great Spirit’s garden.",
+      "The earth does not belong to us; we belong to the earth.",
+      "Listen to the wind — it talks. Listen to the silence — it speaks.",
+      "Actions have reactions.",
+      "The universe doesn't care about justice. It only cares about balance.",
+      "To touch the earth is to have harmony with nature.",
+      "We are all just echoes of who we once were.",
+      "A single bracelet does not jingle.",
+      "Sometimes, the only way to move forward is to shed your old life.",
+      "Nature does not hurry, yet everything is accomplished.",
+      "Magic is real, supernatural is not real. Everything that is real is natural; it is science, but look at nature: it is magic.",
+      "It is better to whisper to the earth than to shout at the sky.",
+      "We are dreamers, shapers, singers, and makers.",
+      "If you want to go fast, go alone. If you want to go far, go together.",
+      "You don't build a better world by destroying what you have. You build by adding to it.",
+      "Dreams are the voice of the spirit.",
+      "The universe is run by the complex interweaving of three elements: energy, matter, and enlightened self-interest.",
+      "Happiness is as a butterfly, which when pursued, is always just beyond your grasp.",
+      "We are all the sum of our tears. Too little and the ground is not fertile, and nothing can grow there.",
+      "Life is a circle, and we are part of that circle.",
+      "Understanding is a three-edged sword: your side, their side, and the truth.",
+      "The wind does not break a tree that bends.",
+      "Everything dies.",
+      "Knowledge is a treasure, but practice is the key to it.",
+      "Logic is the beginning of wisdom, not the end.",
+      "Rain does not fall on one roof alone.",
+      "Hope is like the sun. If you only believe it when you see it, you'll never make it through the night.",
+      "Wisdom begins with wonder.",
+      "The only way to truly escape the mundane is for you to constantly be evolving.",
+      "Silence is the mother of truth.",
+      "The cosmos is within us. We are made of star-stuff.",
+      "The land is sacred; respect it and it will respect you.",
+      "Fear is the mind-killer.",
+      "Be like the bamboo — bend, but do not break.",
+      "Even the smallest person can change the course of the future.",
+      "The stars are the campfires of our ancestors watching over us.",
+      "Do or do not. There is no try.",
+      "Patience is the mother of a beautiful harvest.",
+      "Nothing ends; things change.",
+      "Those who respect the river will be blessed by it.",
+      "Pain is a teacher; so is pleasure.",
+      "Even the smallest drum can call the spirits.",
+      "Everything is a teacher.",
+      "To know the song of the bird is not to trap the bird.",
+      "Your response is what matters.",
+      "Every dawn is a message from the ancestors.",
+      "Master yourself, do not master others.",
+      "The earth is the foundation of all wisdom.",
+      "Master the mind or it does not benefit you if it is smart.",
+      "One foot cannot stand on two different paths.",
+      "If you are calm in pain you are strong.",
+      "A stone is heavy, but wisdom carries no weight.",
+      "If you cannot respect humans you cannot respect yourself.",
+      "Honor is not given; it is earned by actions.",
+      "Only the fool can be wise.",
+      "The spirit of the wolf walks beside the brave.",
+      "Madness is cure if what they call normal is sick.",
+      "Stories are the breath of a people.",
+      "From the ocean we rise to the ocean we go, unique and connected like raindrops in the ocean.",
+      "The journey is the reward."
+    ];
+
+    function zeigeWeisheit() {
+      const randomIndex = Math.floor(Math.random() * weisheiten.length);
+      document.getElementById('weisheit').innerText = weisheiten[randomIndex];
+    }
+
+    // Show a wisdom immediately
+    zeigeWeisheit();
+
+    // Sparkles erstellen
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.top = Math.random() * 100 + 'vh';
+      sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 4000);
+    }
+
+    setInterval(createSparkle, 250);
+  </script>
+
+</body>
+</html>
